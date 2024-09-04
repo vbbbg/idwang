@@ -18,7 +18,7 @@ const MacTerminal = ({ posts, children, showBackButton = false }) => {
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>
       </div>
-      <div className="p-4 font-mono text-sm text-green-400">
+      <div className="p-4 font-mono text-sm text-green-400 h-96 overflow-y-auto">
         {posts ? (
           <>
             <p>$ ls -la</p>

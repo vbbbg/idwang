@@ -41,3 +41,21 @@ body {
 .blinking-cursor {
   animation: blink 1s infinite;
 }
+
+/* 在文件末尾添加这些样式 */
+.MacTerminal::-webkit-scrollbar {
+  width: 10px;
+}
+
+.MacTerminal::-webkit-scrollbar-track {
+  background: #2d3748;
+}
+
+.MacTerminal::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 5px;
+}
+
+.MacTerminal::-webkit-scrollbar-thumb:hover {
+  background: #718096;
+}
