@@ -10,6 +10,7 @@ import carouselCss from './index.module.css'
 const sourceList = [
   {
     image: '/first/1.jpg',
+    pcImage: '/first/11.jpg',
     title: '无畏，更自由',
     subTitle: [
       { text: '兼具极致防护与个性风格' },
@@ -19,30 +20,35 @@ const sourceList = [
   },
   {
     image: '/first/2.jpg',
+    pcImage: '/first/22.jpg',
     title: '全新 iPhone 16 手机壳',
     subTitle: ['打造你的个性风格'],
     id: 'No2',
   },
   {
     image: '/first/3.png',
+    pcImage: '/first/33.png',
     title: '丰富的印花设计',
     subTitle: ['支持全新 iPhone 16 系列'],
     id: 'No3',
   },
   {
     image: '/first/4.png',
+    pcImage: '/first/44.png',
     title: '全新 Apple Watch 10 表带',
     subTitle: ['Bounce Odyssey™ 极强一体式表带'],
     id: 'No4',
   },
   {
     image: '/first/5.png',
+    pcImage: '/first/55.png',
     title: 'MagSafe 配件',
     subTitle: ['Snappy™ 系列产品', '为你的 iPhone 16 创造更多可能'],
     id: 'No5',
   },
   {
     image: '/first/6.mp4',
+    pcImage: '/first/66.mp4',
     id: 'No6',
     title: '屏幕保护贴',
     subTitle: ['提供多方位防护'],
@@ -60,6 +66,7 @@ function CarouselBanner({
   subTitle: (string | { text: string })[]
 }) {
   // todo font-family
+  // todo replace embla-carousel-react
 
   return (
     <div className={carouselCss.bannerContainer} data-id={id}>
@@ -119,28 +126,47 @@ export default function Carousel() {
           switch (item.type) {
             case 'mp4':
               slide = (
-                <video
-                  autoPlay
-                  loop
-                  playsInline
-                  muted
-                  width="100%"
-                  height="100%"
-                  className={carouselCss.carouselVideo}
-                >
-                  <source src={item.image} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                <>
+                  <video
+                    autoPlay
+                    loop
+                    playsInline
+                    muted
+                    width="100%"
+                    height="auto"
+                    className={`${carouselCss.carouselVideo} hidden md:block aspect-[21/8]`}
+                  >
+                    <source src={item.pcImage} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  <video
+                    autoPlay
+                    loop
+                    playsInline
+                    muted
+                    width="100%"
+                    height="auto"
+                    className={`${carouselCss.carouselVideo} md:hidden aspect-[78/100]`}
+                  >
+                    <source src={item.image} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </>
               )
               break
             default:
               slide = (
-                <Image
-                  className={carouselCss.carouselSlide}
-                  src={item.image}
-                  alt={item.id}
-                  fill
-                />
+                <picture>
+                  <source srcSet={item.pcImage} media="(min-width: 768px)" />
+                  <Image
+                    className={carouselCss.carouselSlide}
+                    width={375}
+                    height={479}
+                    style={{ width: '100%', height: 'auto' }}
+                    src={item.image}
+                    alt={item.id}
+                  />
+                </picture>
               )
           }
 

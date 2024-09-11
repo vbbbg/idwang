@@ -11,12 +11,11 @@
 .carouselSlide {
     flex: 0 0 100%;
     min-width: 0;
+    object-fit: cover;
 }
 
 .carouselVideo{
     object-fit: cover;
-    height: 100%;
-    aspect-ratio: .78;
 }
 
 .carouselDotContainer{
