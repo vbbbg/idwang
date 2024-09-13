@@ -9,6 +9,8 @@ export default function Home() {
       <ContentBlock title="特色系列">
         <div className="flex flex-col gap-[12px] md:flex-row">
           <PhoneShellCard
+            imageClass="aspect-square md:aspect-[173/100]"
+            containerClass="md:grow md:shrink md:basis-[auto]"
             bigSrc="/first/p-1-b.png"
             src="/first/p-1.jpg"
             no="01"
@@ -18,6 +20,8 @@ export default function Home() {
             linkBorderStyle="black"
           />
           <PhoneShellCard
+            imageClass="aspect-square md:aspect-[128/100]"
+            containerClass="md:grow md:shrink-0 md:basis-[32%]"
             bigSrc="/first/p-2-b.png"
             src="/first/p-2.png"
             no="02"
