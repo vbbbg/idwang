@@ -32,6 +32,31 @@ export default function Home() {
             linkBorderStyle="white"
           />
         </div>
+        <div className="flex flex-col gap-[12px] md:flex-row pt-[12px]">
+          <PhoneShellCard
+            imageClass="aspect-square md:aspect-[128/100]"
+            containerClass="md:grow md:shrink-0 md:basis-[32%]"
+            bigSrc="/first/p-2-b.png"
+            src="/first/p-2.png"
+            no="03"
+            brief="巧妙配搭你的手机"
+            link="立即选购"
+            bgClass="bg-[#fecad6]"
+            textClass="text-black"
+            linkBorderStyle="black"
+          />
+          <PhoneShellCard
+            imageClass="aspect-square md:aspect-[173/100]"
+            containerClass="md:grow md:shrink md:basis-[auto]"
+            bigSrc="/first/p-1-b.png"
+            src="/first/p-1.jpg"
+            no="04"
+            brief="探索最新手机背带款式"
+            link="了解更多"
+            bgClass="bg-[#21a664]"
+            linkBorderStyle="black"
+          />
+        </div>
       </ContentBlock>
     </main>
   )
