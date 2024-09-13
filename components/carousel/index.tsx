@@ -44,7 +44,11 @@ const sourceList = [
           全新 iPhone 16 手机壳
         </div>
         <div className="relative px-[12px] py-[6px] bg-[#2c5dab] rounded-[16px] rounded-tl-[0] rounded-tr-[0] text-[14px] text-white w-fit">
-          <BannerAfter className="top-0 shadow-[-6px_-6px_1px_#2c5dab] rounded-none rounded-tl-[16px]" />
+          <BannerAfter
+            shadow="shadow-[-6px_-6px_1px_#2c5dab]"
+            rounded="rounded-none rounded-tl-[16px]"
+            className="top-0 "
+          />
           <div>打造你的个性风格</div>
         </div>
       </BannerContainer>
@@ -62,7 +66,11 @@ const sourceList = [
           丰富的印花设计
         </div>
         <div className="relative px-[12px] py-[6px] bg-[#21a664] rounded-[16px] rounded-tl-[0] rounded-tr-[0] text-[14px] text-black w-fit">
-          <BannerAfter className="top-0 shadow-[-6px_-6px_1px_#21a664] rounded-none rounded-tl-[16px]" />
+          <BannerAfter
+            shadow="shadow-[-6px_-6px_1px_#21a664]"
+            rounded="rounded-none rounded-tl-[16px]"
+            className="top-0"
+          />
           <div>支持全新 iPhone 16 系列</div>
         </div>
       </BannerContainer>
@@ -80,7 +88,11 @@ const sourceList = [
           全新 Apple Watch 10 表带
         </div>
         <div className="relative px-[12px] py-[6px] bg-[#f15b41] rounded-[16px] rounded-tl-[0] rounded-tr-[0] text-[14px] text-black w-fit">
-          <BannerAfter className="top-0 shadow-[-6px_-6px_1px_#f15b41] rounded-none rounded-tl-[16px]" />
+          <BannerAfter
+            shadow="shadow-[-6px_-6px_1px_#f15b41]"
+            rounded="rounded-none rounded-tl-[16px]"
+            className="top-0 "
+          />
           <div>Bounce Odyssey™ 极强一体式表带</div>
         </div>
       </BannerContainer>
@@ -97,7 +109,7 @@ const sourceList = [
         <BannerContainer>
           <div className="relative bg-[#fecad6] text-[26px] text-[#2c5dab] font-bold rounded-[16px] p-[12px] pb-[6px] rounded-bl-[0] rounded-br-[0] w-fit">
             MagSafe 配件
-            <BannerAfter className="shadow-[-6px_6px_1px_#fecad6] " />
+            <BannerAfter shadow="shadow-[-6px_6px_1px_#fecad6] " />
           </div>
           <div className="px-[12px] py-[6px] bg-[#fecad6] w-[269px] rounded-[16px] rounded-tl-[0] text-[14px] text-black">
             <div>Snappy™ 系列产品</div>
@@ -120,7 +132,11 @@ const sourceList = [
           屏幕保护贴
         </div>
         <div className="relative px-[12px] py-[6px] bg-[#F6E163] rounded-[16px] rounded-tl-[0] rounded-tr-[0] text-[14px] text-black w-fit">
-          <BannerAfter className="top-0 shadow-[-6px_-6px_1px_#F6E163] rounded-none rounded-tl-[16px]" />
+          <BannerAfter
+            shadow="shadow-[-6px_-6px_1px_#F6E163]"
+            rounded="rounded-none rounded-tl-[16px]"
+            className="top-0"
+          />
           <div>提供多方位防护</div>
         </div>
       </BannerContainer>
@@ -136,10 +152,18 @@ function BannerContainer({ children }: { children: ReactNode }) {
   )
 }
 
-function BannerAfter({ className }: { className?: string }) {
+function BannerAfter({
+  className,
+  shadow = 'shadow-[-6px_6px_1px_#F6E163]',
+  rounded = 'rounded-[16px]',
+}: {
+  className?: string
+  shadow?: string
+  rounded?: string
+}) {
   return (
     <div
-      className={`absolute bottom-0 w-[18px] h-[23px] rounded-[16px] right-[-18px] shadow-[-6px_6px_1px_#F6E163] ${className}`}
+      className={`absolute bottom-0 w-[18px] h-[23px]  right-[-18px] ${rounded} ${shadow} ${className}`}
     />
   )
 }
