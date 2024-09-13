@@ -95,7 +95,7 @@ const sourceList = [
     banner: () => {
       return (
         <BannerContainer>
-          <div className="relative bg-[#fecad6] text-[26px] text-[#2c5dab] font-bold	rounded-[16px] p-[12px] pb-[6px] rounded-bl-[0] rounded-br-[0] w-fit">
+          <div className="relative bg-[#fecad6] text-[26px] text-[#2c5dab] font-bold rounded-[16px] p-[12px] pb-[6px] rounded-bl-[0] rounded-br-[0] w-fit">
             MagSafe 配件
             <BannerAfter className="shadow-[-6px_6px_1px_#fecad6] " />
           </div>
@@ -220,6 +220,7 @@ export default function Carousel() {
                     style={{ width: '100%', height: 'auto' }}
                     src={item.image}
                     alt={item.id}
+                    loading="eager"
                   />
                 </picture>
               )
