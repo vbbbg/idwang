@@ -32,7 +32,7 @@ export default function Home() {
             linkBorderStyle="white"
           />
         </div>
-        <div className="flex flex-col gap-[12px] md:flex-row">
+        <div className="flex flex-col gap-[12px] md:flex-row pt-[12px]">
           <PhoneShellCard
             imageClass="aspect-square md:aspect-[128/100]"
             containerClass="md:grow md:shrink-0 md:basis-[32%]"
