@@ -238,7 +238,7 @@ export default function Carousel() {
                 <picture>
                   <source srcSet={item.pcImage} media="(min-width: 768px)" />
                   <Image
-                    className={carouselCss.carouselSlide}
+                    className={`${carouselCss.carouselSlide} aspect-[78/100] md:aspect-[21/8]`}
                     width={375}
                     height={479}
                     style={{ width: '100%', height: 'auto' }}
