@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import { IcTwotoneSearch } from '@/components/svg/search'
 import Image from 'next/image'
 import { IcBaselinePerson } from '@/components/svg/login-person'
-
+import Link from 'next/link'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -33,7 +33,9 @@ export default function RootLayout({
             />
           </div>
 
-          <IcBaselinePerson className="cursor-pointer" />
+          <Link href="/sign-in">
+            <IcBaselinePerson className="cursor-pointer" />
+          </Link>
         </nav>
         {children}
       </body>
