@@ -15,7 +15,7 @@ export default async function SignInPage({
 
   return (
     <div className="pt-[80px] px-[16px]">
-      <div className="rounded-[16px]">
+      <div className="rounded-[16px] md:w-1/3 m-auto">
         <div className="py-[32px] px-[16px]">
           <SignInForm key={mode} mode={mode} />
         </div>

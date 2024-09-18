@@ -95,7 +95,7 @@ export function SignInForm({ mode }: { mode: string }) {
             name="password"
           />
 
-          <Button type="submit" className="mt-[10px]">
+          <Button type="submit" className="mt-[10px] md:w-full">
             {pageInfo.btnText}
           </Button>
         </form>
