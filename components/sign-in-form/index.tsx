@@ -13,6 +13,10 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { auth } from '@/actions/auth-actions'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
+import { useState } from 'react'
 
 // 定义手机号的正则表达式
 const phoneRegex = /^1[3-9]\d{9}$/
@@ -30,7 +34,9 @@ const formSchema = z.object({
     .regex(/\d/, '密码必须包含数字'),
 })
 
-export function SignInForm() {
+export function SignInForm({ mode }: { mode: string }) {
+  const [errorMsg, setErrorMsg] = useState('')
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,8 +46,19 @@ export function SignInForm() {
   })
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data)
+    auth(mode, data).then(r => {
+      setErrorMsg(r ? r.error : '')
+    })
   }
+
+  const pageInfo =
+    mode === 'register'
+      ? {
+          btnText: '注册',
+        }
+      : {
+          btnText: '登陆',
+        }
 
   return (
     <div className="text-black">
@@ -79,10 +96,18 @@ export function SignInForm() {
           />
 
           <Button type="submit" className="mt-[10px]">
-            提交
+            {pageInfo.btnText}
           </Button>
         </form>
       </Form>
+
+      {!!errorMsg && (
+        <Alert variant="destructive" className="mt-[10px]">
+          <ExclamationTriangleIcon className="h-4 w-4" />
+          <AlertTitle>错误</AlertTitle>
+          <AlertDescription>{errorMsg}</AlertDescription>
+        </Alert>
+      )}
     </div>
   )
 }
