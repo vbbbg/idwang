@@ -1,6 +1,6 @@
 'use server'
 
-import { createUser, getUserByPhoneNumber } from '@/lib/user'
+import { createUserVPostgres, getUserByPhoneNumberVPostgres } from '@/lib/user'
 import { hashUserPassword, verifyPassword } from '@/lib/hash'
 import { redirect } from 'next/navigation'
 import { clearSession, createAuthSession } from '@/lib/auth'
@@ -18,7 +18,7 @@ export async function create({
   const hashedPassword = hashUserPassword(password)
 
   try {
-    const id = createUser(phoneNumber, hashedPassword)
+    const id = await createUserVPostgres(phoneNumber, hashedPassword)
     await createAuthSession(`${id}`)
   } catch (e) {
     console.error(e)
@@ -32,7 +32,7 @@ export async function login({
   phoneNumber,
   password,
 }: Pick<UserInfo, 'password' | 'phoneNumber'>) {
-  const existUser = getUserByPhoneNumber(phoneNumber)
+  const existUser = await getUserByPhoneNumberVPostgres(phoneNumber)
 
   if (!existUser) {
     return { error: '用户不存在' }
