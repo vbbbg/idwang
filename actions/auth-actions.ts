@@ -21,7 +21,10 @@ export async function create({
     const id = await createUserVPostgres(phoneNumber, hashedPassword)
     await createAuthSession(`${id}`)
   } catch (e) {
-    console.error(e)
+    if (e instanceof Error && e.message === 'phone_exists') {
+      return { error: '该手机号已注册' }
+    }
+
     return { error: '出现了些状况，请稍后再试' }
   }
 
