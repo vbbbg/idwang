@@ -4,8 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { verifyAuth } from '@/lib/auth'
-import { IcRoundLogout } from '@/components/svg/logout'
-import { logout } from '@/actions/auth-actions'
+import LogoutBtn from '@/components/logout-btn'
+
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,16 +24,7 @@ export default async function RootLayout({
 
   const RightSideArea = () => {
     if (user) {
-      return (
-        <div className="flex">
-          <form className="flex" action={logout}>
-            <Button>
-              <IcRoundLogout />
-              登出
-            </Button>
-          </form>
-        </div>
-      )
+      return <LogoutBtn />
     }
 
     return (

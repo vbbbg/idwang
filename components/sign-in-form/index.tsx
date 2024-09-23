@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { auth } from '@/actions/auth-actions'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
+import { ExclamationTriangleIcon, ReloadIcon } from '@radix-ui/react-icons'
 import { useState } from 'react'
 
 // 定义手机号的正则表达式
@@ -35,20 +35,26 @@ const formSchema = z.object({
 })
 
 export function SignInForm({ mode }: { mode: string }) {
+  const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      phoneNumber: '13456789012',
-      password: '123456qw',
+      phoneNumber: '',
+      password: '',
     },
   })
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    auth(mode, data).then(r => {
-      setErrorMsg(r ? r.error : '')
-    })
+    setLoading(true)
+    auth(mode, data)
+      .then(r => {
+        setErrorMsg(r ? r.error : '')
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   const pageInfo =
@@ -95,7 +101,12 @@ export function SignInForm({ mode }: { mode: string }) {
             name="password"
           />
 
-          <Button type="submit" className="mt-[10px] md:w-full">
+          <Button
+            type="submit"
+            className="mt-[10px] md:w-full"
+            disabled={loading}
+          >
+            {loading && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
             {pageInfo.btnText}
           </Button>
         </form>

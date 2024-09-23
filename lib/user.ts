@@ -4,6 +4,13 @@ export async function createUserVPostgres(
   phoneNumber: string,
   password: string
 ) {
+  const queryResult =
+    await sql`SELECT EXISTS (SELECT 1 FROM users WHERE phone_number = ${phoneNumber});`
+
+  if (queryResult.rows[0]?.exists) {
+    throw new Error('phone_exists')
+  }
+
   const result =
     await sql`INSERT INTO users (phone_number, password) VALUES (${phoneNumber}, ${password}) RETURNING id;`
 
