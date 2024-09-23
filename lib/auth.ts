@@ -1,17 +1,7 @@
-import { Lucia } from 'lucia'
-import { BetterSqlite3Adapter } from '@lucia-auth/adapter-sqlite'
-import db from '@/lib/db'
 import { cookies } from 'next/headers'
+import { postgresLucia } from '@/lib/postgres'
 
-const lucia = new Lucia(
-  new BetterSqlite3Adapter(db, { user: 'users', session: 'sessions' }),
-  {
-    sessionCookie: {
-      expires: false,
-      attributes: { secure: process.env.NODE_ENV === 'production' },
-    },
-  }
-)
+const lucia = postgresLucia
 
 export async function createAuthSession(userId: string) {
   const session = await lucia.createSession(userId, {})

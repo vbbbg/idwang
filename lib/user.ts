@@ -1,16 +1,26 @@
-import db from '@/lib/db'
-import { UserInfo } from '@/actions/auth-actions'
+import { sql } from '@vercel/postgres'
 
-export function createUser(phone: string, password: string) {
-  const result = db
-    .prepare(`insert into users (phoneNumber, password) values (?,?)`)
-    .run(phone, password)
+export async function createUserVPostgres(
+  phoneNumber: string,
+  password: string
+) {
+  const result =
+    await sql`INSERT INTO users (phone_number, password) VALUES (${phoneNumber}, ${password}) RETURNING id;`
 
-  return result.lastInsertRowid
+  if (result.rowCount === 1) {
+    return result.rows[0].id
+  }
+
+  return null
 }
 
-export function getUserByPhoneNumber(phoneNumber: string): UserInfo {
-  return db
-    .prepare(`select * from users where phoneNumber=?`)
-    .get(phoneNumber) as UserInfo
+export async function getUserByPhoneNumberVPostgres(phoneNumber: string) {
+  const result =
+    await sql`SELECT * FROM users WHERE phone_number = ${phoneNumber};`
+
+  if (result.rowCount === 0) {
+    return null
+  }
+
+  return result.rows[0]
 }
