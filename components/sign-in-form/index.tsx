@@ -41,8 +41,8 @@ export function SignInForm({ mode }: { mode: string }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      phoneNumber: '13456789012',
-      password: '123456qw',
+      phoneNumber: '',
+      password: '',
     },
   })
 
