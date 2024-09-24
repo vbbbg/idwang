@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { verifyAuth } from '@/lib/auth'
 import LogoutBtn from '@/components/logout-btn'
+import LayoutNav from '@/components/layout-nav'
 
 import './globals.css'
 
@@ -24,11 +25,18 @@ export default async function RootLayout({
 
   const RightSideArea = () => {
     if (user) {
-      return <LogoutBtn />
+      return (
+        <div className="flex gap-1">
+          <Link href="/dashboard">
+            <Button variant="ghost">控制台</Button>
+          </Link>
+          <LogoutBtn />
+        </div>
+      )
     }
 
     return (
-      <div className="flex gap-[10px]">
+      <div className="flex gap-1">
         <Link href="/sso?mode=login">
           <Button variant="ghost">登陆</Button>
         </Link>
@@ -42,7 +50,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <nav className="absolute text-[28px] z-10 text-black px-[16px] md:px-[32px] py-[12px] flex justify-between w-full items-center leading-[22px]">
+        <LayoutNav>
           <div className="h-[40px]">
             <Link href="/">
               <Image
@@ -55,7 +63,7 @@ export default async function RootLayout({
           </div>
 
           <RightSideArea />
-        </nav>
+        </LayoutNav>
         {children}
       </body>
     </html>
