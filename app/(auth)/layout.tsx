@@ -12,5 +12,5 @@ export default async function Layout({
     redirect('/')
   }
 
-  return children
+  return <div className="flex">{children}</div>
 }

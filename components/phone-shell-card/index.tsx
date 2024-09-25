@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 function getLinkBorderClass(linkBorderStyle: 'white' | 'black') {
   switch (linkBorderStyle) {
@@ -66,11 +67,13 @@ export default function PhoneShellCard({
           className={`flex flex-col gap-[32px] md:grow md:shrink md:basis-[auto] md:justify-between ${textClass}`}
         >
           <div className="text-[26px] font-[800] md:text-[36px]">{brief}</div>
-          <div
-            className={`text-[16px] rounded-[40px] ${linkBorderClass} w-fit py-[10px] px-[20px] font-[500] cursor-pointer leading-[1.2]`}
-          >
-            {link}
-          </div>
+          <Link href={`/series/${no}`}>
+            <div
+              className={`text-[16px] rounded-[40px] ${linkBorderClass} w-fit py-[10px] px-[20px] font-[500] cursor-pointer leading-[1.2]`}
+            >
+              {link}
+            </div>
+          </Link>
         </div>
       </div>
     </div>
