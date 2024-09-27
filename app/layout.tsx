@@ -25,28 +25,39 @@ export default async function RootLayout({
   const { user } = await verifyAuth()
 
   const RightSideArea = () => {
-    if (user) {
-      return (
-        <div className="flex gap-1">
+    const componentList = [
+      () =>
+        user ? (
           <Link href="/dashboard">
             <Button variant="ghost">控制台</Button>
           </Link>
-          <LogoutBtn />
-        </div>
-      )
-    }
+        ) : null,
 
-    return (
-      <div className="flex gap-1">
-        <Link href="/sso?mode=login">
-          <Button variant="ghost">登陆</Button>
-        </Link>
-        <Link href="/sso?mode=register">
-          <Button>注册</Button>
-        </Link>
-        <CartDrawer />
-      </div>
-    )
+      () =>
+        user ? (
+          <div className="flex gap-1">
+            <LogoutBtn />
+          </div>
+        ) : null,
+
+      () =>
+        user ? null : (
+          <Link href="/sso?mode=login">
+            <Button variant="ghost">登陆</Button>
+          </Link>
+        ),
+
+      () =>
+        user ? null : (
+          <Link href="/sso?mode=register">
+            <Button>注册</Button>
+          </Link>
+        ),
+
+      () => <CartDrawer />,
+    ]
+
+    return <div className="flex gap-1">{componentList.map(item => item())}</div>
   }
 
   return (
