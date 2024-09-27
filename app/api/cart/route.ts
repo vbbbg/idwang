@@ -63,3 +63,52 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
+// GET 请求处理函数
+export async function GET(request: NextRequest) {
+  try {
+    // 从查询参数中获取用户ID
+    const { searchParams } = new URL(request.url)
+    const userId = searchParams.get('userId')
+
+    if (!userId) {
+      return new Response(
+        JSON.stringify({ message: 'Missing userId in query' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      )
+    }
+
+    // 查询用户的购物车信息
+    const { rows: cart } = await sql`
+      SELECT
+        c.id AS cart_id,
+        ci.sku_id,
+        ci.quantity,
+        p.name AS product_name,
+        p.description AS product_description,
+        s.price,
+        s.color,
+        s.material
+      FROM carts c
+      JOIN cart_items ci ON c.id = ci.cart_id
+      JOIN skus s ON ci.sku_id = s.id
+      JOIN products p ON s.product_id = p.id
+      WHERE c.user_id = ${userId};
+    `
+
+    // 返回购物车详情
+    return new Response(JSON.stringify(cart), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  } catch (error) {
+    console.error('Error fetching cart:', error)
+    return new Response(JSON.stringify({ message: 'Error fetching cart' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+}

@@ -16,3 +16,14 @@ interface ProductInfo {
   description: string
   skus: SKU[]
 }
+
+interface CartItem {
+  cart_id: number
+  sku_id: number
+  quantity: number
+  product_name: string
+  product_description: string
+  price: string
+  color: string
+  material: string
+}
