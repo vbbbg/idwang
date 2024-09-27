@@ -6,6 +6,7 @@ interface SKU {
   material: string
   compatibility: string
   stock: number
+  color_hex: string
 }
 
 // 定义商品信息的接口，其中包含嵌套的 SKU 数组

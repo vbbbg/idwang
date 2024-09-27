@@ -25,7 +25,8 @@ export default async function SeriesPage({
                 s.color AS sku_color, 
                 s.material AS sku_material, 
                 s.compatibility AS sku_compatibility, 
-                s.stock AS sku_stock
+                s.stock AS sku_stock,
+                s.color_hex AS sku_color_hex
             FROM 
                 products p
             JOIN 
@@ -45,6 +46,7 @@ export default async function SeriesPage({
       material: row.sku_material,
       compatibility: row.sku_compatibility,
       stock: row.sku_stock,
+      color_hex: row.sku_color_hex,
     })),
   }
 
