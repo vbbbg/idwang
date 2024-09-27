@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { verifyAuth } from '@/lib/auth'
 import LogoutBtn from '@/components/logout-btn'
 import LayoutNav from '@/components/layout-nav'
+import CartDrawer from '@/components/cart-drawer'
 
 import './globals.css'
 
@@ -43,6 +44,7 @@ export default async function RootLayout({
         <Link href="/sso?mode=register">
           <Button>注册</Button>
         </Link>
+        <CartDrawer />
       </div>
     )
   }

@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { SeriesItem } from '@/components/series-item'
+import { sql } from '@vercel/postgres'
 
 export async function generateMetadata() {
   return {
@@ -7,20 +8,52 @@ export async function generateMetadata() {
   }
 }
 
-export default function SeriesPage({ params }: { params: { no: string } }) {
+export default async function SeriesPage({
+  params,
+}: {
+  params: { no: string }
+}) {
   const { no } = params
 
-  const itemInfo = {
-    name: '波漾手机壳',
-    price: 419,
+  const { rows } = await sql`
+            SELECT 
+                p.id AS product_id, 
+                p.name AS product_name, 
+                p.description AS product_description, 
+                s.id AS sku_id, 
+                s.price AS sku_price, 
+                s.color AS sku_color, 
+                s.material AS sku_material, 
+                s.compatibility AS sku_compatibility, 
+                s.stock AS sku_stock
+            FROM 
+                products p
+            JOIN 
+                skus s ON p.id = s.product_id
+            WHERE 
+                p.id = ${1};
+        `
+
+  const productInfo = {
+    id: rows[0].product_id,
+    name: rows[0].product_name,
+    description: rows[0].product_description,
+    skus: rows.map(row => ({
+      sku_id: row.sku_id,
+      price: row.sku_price,
+      color: row.sku_color,
+      material: row.sku_material,
+      compatibility: row.sku_compatibility,
+      stock: row.sku_stock,
+    })),
   }
 
   return (
     <>
       <Head>
-        <title>{itemInfo.name}</title>
+        <title>{productInfo.name}</title>
       </Head>
-      <SeriesItem itemInfo={itemInfo} />
+      <SeriesItem itemInfo={productInfo} />
     </>
   )
 }
