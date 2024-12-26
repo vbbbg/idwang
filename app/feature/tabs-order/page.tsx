@@ -2,6 +2,7 @@
 
 import { ITab, Tabs } from '@/app/feature/constant'
 import React, {
+  Children,
   DragEventHandler,
   ReactNode,
   useEffect,
@@ -217,7 +218,11 @@ function getMouseMove(current: number, prev?: number) {
   }
 }
 
-export function DragWrapper(props: { tab: ITab; children: ReactNode }) {
+export function DragWrapper(props: {
+  tab: ITab
+  onDragStart?: () => void
+  children: ReactNode
+}) {
   const { tab } = props
 
   const initMouseXRef = useRef(0)
@@ -227,6 +232,8 @@ export function DragWrapper(props: { tab: ITab; children: ReactNode }) {
     initMouseXRef.current = e.clientX
 
     setPlaceholderAndInitStyle(tab.key)
+
+    props.onDragStart?.()
   }
 
   const onDrag: DragEventHandler<HTMLDivElement> | undefined = e => {
@@ -255,19 +262,21 @@ export function DragWrapper(props: { tab: ITab; children: ReactNode }) {
     hideDragPreview(document.getElementById(tab.key) as HTMLDivElement)
   })
 
-  return (
-    <>
-      <div
-        draggable
-        id={tab.key}
-        onDragStart={onDragStart}
-        onDrag={onDrag}
-        onDragEnd={onDragEnd}
-      >
-        {props.children}
-      </div>
-    </>
-  )
+  return Children.map(props.children, child => {
+    if (child === undefined) return undefined
+
+    if (React.isValidElement(child)) {
+      return React.cloneElement(child as any, {
+        draggable: true,
+        id: tab.key,
+        onDragStart: onDragStart,
+        onDrag: onDrag,
+        onDragEnd: onDragEnd,
+      })
+    }
+
+    return child // 对于非 React 元素，直接返回
+  })
 }
 
 const TabItem = ({
@@ -275,11 +284,13 @@ const TabItem = ({
   onClick,
   isSelected,
   variant = 'default',
+  ...other
 }: {
   label: string
   isSelected?: boolean
   onClick?: () => void
   variant?: 'default' | 'secondary'
+  other?: { [K: string]: any }
 }) => {
   const variants = {
     default: {
@@ -300,6 +311,7 @@ const TabItem = ({
         isSelected ? styles.selected : styles.unselected
       }`}
       onClick={onClick}
+      {...other}
     >
       <span>{label}</span>
       <button className="w-4 h-4 flex items-center justify-center rounded-full hover:bg-gray-500 text-white rotate-45 select-none text-xs">
@@ -318,7 +330,11 @@ export default function TabsOrder() {
         <div className="relative flex justify-center items-center bg-gray-900 gap-[5px]">
           {Tabs.map(item => {
             return (
-              <DragWrapper tab={item} key={item.key}>
+              <DragWrapper
+                tab={item}
+                key={item.key}
+                onDragStart={() => setSelect(item.key)}
+              >
                 <TabItem
                   label={item.label}
                   isSelected={item.key === select}
