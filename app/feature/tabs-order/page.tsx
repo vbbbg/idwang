@@ -299,21 +299,20 @@ function DragWrapper(props: {
 
 const TabItem = ({
   label,
-  onClick,
   isSelected,
   variant = 'default',
   ...other
 }: {
   label: string
   isSelected?: boolean
-  onClick?: () => void
+  onMouseDown?: () => void
   variant?: 'default' | 'secondary'
   other?: { [K: string]: any }
 }) => {
   const variants = {
     default: {
-      selected: 'bg-[rgb(60,60,60)] text-white',
-      unselected: 'text-gray-400 hover:bg-gray-700',
+      selected: 'bg-[rgb(60,60,60)]',
+      unselected: '',
     },
     secondary: {
       selected: 'bg-blue-600 text-white',
@@ -325,16 +324,20 @@ const TabItem = ({
 
   return (
     <div
-      className={`relative flex items-center justify-between w-48 h-8 px-4 py-2 rounded-md select-none text-xs ${
+      className={`relative w-48 h-8 rounded-md select-none text-xs ${
         isSelected ? styles.selected : styles.unselected
       }`}
-      onClick={onClick}
       {...other}
     >
-      <span>{label}</span>
-      <button className="w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-500 text-white rotate-45 select-none text-[1rem]">
-        +
-      </button>
+      <div
+        className={`flex items-center justify-between pl-4 pr-2 mb-[6px] h-[calc(100%-6px)] rounded transition ${isSelected ? undefined : 'hover:bg-[rgb(3,74,119)]'}`}
+      >
+        <span>{label}</span>
+        <button className="w-4 h-4 flex items-center justify-center rounded-full hover:bg-gray-500 text-white rotate-45 select-none">
+          +
+        </button>
+      </div>
+
       {isSelected ? (
         <>
           <div className="absolute bottom-0 w-[18px] h-[23px] shadow-[6px_6px_1px_rgb(60,60,60)] left-[-18px] rounded-[16px] z-40" />
@@ -346,10 +349,10 @@ const TabItem = ({
 }
 
 export default function TabsOrder() {
-  const [select, setSelect] = useState('')
+  const [select, setSelect] = useState(Tabs[0].key)
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen overflow-hidden bg-[rgb(61,61,61)]">
       <div className="bg-[rgb(60,60,60)] pb-[6px] flex items-end mt-[100px]">
         <div className="relative w-full pt-[6px] flex  bg-[rgb(31,32,32)] justify-center items-end  gap-[5px]">
           {Tabs.map(item => {
@@ -362,7 +365,7 @@ export default function TabsOrder() {
                 <TabItem
                   label={item.label}
                   isSelected={item.key === select}
-                  onClick={() => setSelect(item.key)}
+                  onMouseDown={() => setSelect(item.key)}
                 />
               </DragWrapper>
             )
