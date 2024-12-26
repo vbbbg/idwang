@@ -57,7 +57,7 @@ function removePlaceholderAndSetStyle(dragId: string): void {
   if (!target) return
 
   requestAnimationFrame(() => {
-    target.style.transition = 'all 300ms ease'
+    target.style.transition = 'all 150ms linear'
     target.style.left = `${placeholder.offsetLeft}px`
     target.style.transform = 'translateX(0)'
   })
@@ -134,7 +134,7 @@ function swapWithFlipAnimation(
 
   // 使用 requestAnimationFrame 确保动画顺序正确
   requestAnimationFrame(() => {
-    drop.style.transition = 'transform 300ms ease'
+    drop.style.transition = 'transform 150ms linear'
     drop.style.transform = 'translateX(0)'
   })
 
@@ -310,7 +310,7 @@ const TabItem = ({
   const variants = {
     default: {
       selected: 'bg-[rgb(60,60,60)] text-white',
-      unselected: 'bg-gray-900 text-gray-400 hover:bg-gray-700',
+      unselected: 'text-gray-400 hover:bg-gray-700',
     },
     secondary: {
       selected: 'bg-blue-600 text-white',
@@ -322,16 +322,22 @@ const TabItem = ({
 
   return (
     <div
-      className={`flex items-center justify-between w-48 h-8 px-4 py-2 rounded-md select-none text-xs ${
+      className={`relative flex items-center justify-between w-48 h-8 px-4 py-2 rounded-md select-none text-xs ${
         isSelected ? styles.selected : styles.unselected
       }`}
       onClick={onClick}
       {...other}
     >
       <span>{label}</span>
-      <button className="w-4 h-4 flex items-center justify-center rounded-full hover:bg-gray-500 text-white rotate-45 select-none text-xs">
+      <button className="w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-500 text-white rotate-45 select-none text-[1rem]">
         +
       </button>
+      {isSelected ? (
+        <>
+          <div className="absolute bottom-0 w-[18px] h-[23px] shadow-[6px_6px_1px_rgb(60,60,60)] left-[-18px] rounded-[16px] z-40" />
+          <div className="absolute bottom-0 w-[18px] h-[23px] shadow-[-6px_6px_1px_rgb(60,60,60)] right-[-18px] rounded-[16px] z-40" />
+        </>
+      ) : null}
     </div>
   )
 }
@@ -341,8 +347,8 @@ export default function TabsOrder() {
 
   return (
     <div className="h-screen overflow-hidden">
-      <div className="bg-gray-900 text-gray-400 h-12 flex items-center px-4 mt-[100px]">
-        <div className="relative flex justify-center items-center bg-gray-900 gap-[5px]">
+      <div className="bg-[rgb(60,60,60)] pb-[6px] flex items-end mt-[100px]">
+        <div className="relative w-full pt-[6px] flex  bg-[rgb(31,32,32)] justify-center items-end  gap-[5px]">
           {Tabs.map(item => {
             return (
               <DragWrapper
