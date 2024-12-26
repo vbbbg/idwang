@@ -232,7 +232,7 @@ function getMouseMove(current: number, prev?: number) {
   }
 }
 
-export function DragWrapper(props: {
+function DragWrapper(props: {
   tab: ITab
   onDragStart?: () => void
   children: ReactNode
