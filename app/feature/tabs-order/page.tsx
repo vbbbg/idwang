@@ -37,6 +37,17 @@ function setPlaceholderAndInitStyle(dragId: string): void {
   style.zIndex = '1'
 }
 
+function switchHover(target: HTMLDivElement, action: 'on' | 'off') {
+  const parent = target.parentElement
+  if (!parent) return
+
+  Array.from(parent.children).forEach(child => {
+    if (child.id === target.id) return
+    ;(child as HTMLDivElement).style.pointerEvents =
+      action === 'off' ? 'none' : ''
+  })
+}
+
 function removePlaceholderAndSetStyle(dragId: string): void {
   const placeholderId = `placeholder-${dragId}`
   const placeholder = document.getElementById(placeholderId)
@@ -231,6 +242,8 @@ export function DragWrapper(props: {
   const onDragStart: DragEventHandler<HTMLDivElement> | undefined = e => {
     initMouseXRef.current = e.clientX
 
+    switchHover(e.target as HTMLDivElement, 'off')
+
     setPlaceholderAndInitStyle(tab.key)
 
     props.onDragStart?.()
@@ -254,8 +267,10 @@ export function DragWrapper(props: {
     }
   }
 
-  const onDragEnd: DragEventHandler<HTMLDivElement> | undefined = () => {
+  const onDragEnd: DragEventHandler<HTMLDivElement> | undefined = e => {
     removePlaceholderAndSetStyle(tab.key)
+
+    switchHover(e.target as HTMLDivElement, 'on')
   }
 
   useEffect(() => {
