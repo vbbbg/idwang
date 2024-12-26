@@ -9,7 +9,6 @@ import React, {
   useRef,
   useState,
 } from 'react'
-import { getEmptyImage } from 'react-dnd-html5-backend'
 
 function setPlaceholderAndInitStyle(dragId: string): void {
   // 获取目标 DOM 元素
@@ -214,8 +213,12 @@ function hideDragPreview(element: HTMLDivElement) {
   element.addEventListener('dragstart', (event: DragEvent) => {
     if (!event.dataTransfer) return
 
+    const emptyImage = new Image()
+    emptyImage.src =
+      'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+
     // 设置拖拽时显示的图片为透明图片
-    event.dataTransfer.setDragImage(getEmptyImage(), 0, 0)
+    event.dataTransfer.setDragImage(emptyImage, 0, 0)
   })
 }
 
