@@ -324,7 +324,7 @@ const TabItem = ({
 
   return (
     <div
-      className={`relative w-48 h-8 rounded-md select-none text-xs ${
+      className={`relative w-48 h-8 rounded-md select-none text-xs text-white ${
         isSelected ? styles.selected : styles.unselected
       }`}
       {...other}
