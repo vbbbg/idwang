@@ -330,19 +330,12 @@ const TabItem = ({
       {...other}
     >
       <div
-        className={`group relative flex items-center justify-between pl-4 pr-2 mb-[6px] h-[calc(100%-6px)] rounded transition ${isSelected ? '' : 'hover:bg-[rgb(3,74,119)]'}`}
+        className={`flex items-center justify-between pl-4 pr-2 mb-[6px] h-[calc(100%-6px)] rounded transition ${isSelected ? undefined : 'hover:bg-[rgb(3,74,119)]'}`}
       >
         <span>{label}</span>
-
-        <div>
-          <button className="w-4 h-4 flex items-center justify-center rounded-full hover:bg-gray-500 text-white rotate-45 select-none">
-            +
-          </button>
-
-          {isSelected ? null : (
-            <div className="group-hover:after:hidden after:content-[''] after:w-[2px] after:h-[50%] after:bg-gray-600 after:absolute after:right-[-3px] after:top-0 after:bottom-0 after:m-auto after:translate-x-1/2"></div>
-          )}
-        </div>
+        <button className="w-4 h-4 flex items-center justify-center rounded-full hover:bg-gray-500 text-white rotate-45 select-none">
+          +
+        </button>
       </div>
 
       {isSelected ? (
@@ -361,7 +354,7 @@ export default function TabsOrder() {
   return (
     <div className="h-screen overflow-hidden bg-[rgb(61,61,61)]">
       <div className="bg-[rgb(60,60,60)] pb-[6px] flex items-end mt-[100px]">
-        <div className="relative w-full pt-[6px] flex  bg-[rgb(31,32,32)] justify-center items-end  gap-[6px]">
+        <div className="relative w-full pt-[6px] flex  bg-[rgb(31,32,32)] justify-center items-end  gap-[5px]">
           {Tabs.map(item => {
             return (
               <DragWrapper
