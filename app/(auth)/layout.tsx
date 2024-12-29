@@ -12,5 +12,10 @@ export default async function Layout({
     redirect('/')
   }
 
-  return children
+  return (
+    <div className="overflow-hidden">
+      <div className="mt-[64px]" />
+      {children}
+    </div>
+  )
 }

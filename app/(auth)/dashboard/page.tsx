@@ -1,3 +1,3 @@
 export default function DashboardPage() {
-  return <div>welcome</div>
+  return <div className="text-black">welcome</div>
 }
